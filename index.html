@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>一镜到底 · 演示推演台｜嘉法狮中国数字营销自动化平台</title>
+<meta name="description" content="嘉法狮中国 · 年度数字资产运营服务方案 —— 客户演示一镜到底推演台">
+<style>
+  :root{
+    --ink:#0e1620; --ink-2:#39464f; --ink-3:#6b7883; --ink-4:#9aa5ad;
+    --line:#e3e8ea; --line-2:#ccd5d9;
+    --bg:#eef2f3; --paper:#ffffff; --paper-2:#f8fafb;
+    --accent:#17564a; --accent-2:#2c7a68; --accent-soft:#e7f1ee;
+    --gold:#a97c1c; --gold-soft:#fdf6e7;
+    --red:#b4362f; --red-soft:#fdeeed;
+    --green:#2f7a4f; --green-soft:#ecf7f0;
+    --side-w:236px;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0;height:100%}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    font-size:15px; line-height:1.75; -webkit-font-smoothing:antialiased;
+    overflow:hidden;
+  }
+  button{font-family:inherit;cursor:pointer}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+
+  /* ══════════ 顶栏 ══════════ */
+  #top{
+    height:52px;background:var(--paper);border-bottom:1px solid var(--line);
+    display:flex;align-items:center;gap:14px;padding:0 16px;position:relative;z-index:30;
+  }
+  #brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:14.5px;letter-spacing:-.01em;white-space:nowrap}
+  #brand .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);flex:none}
+  #brand small{font-weight:500;color:var(--ink-4);font-size:11.5px;letter-spacing:.02em}
+  .top-sp{flex:1}
+  .pill{
+    display:inline-flex;align-items:center;gap:7px;height:29px;padding:0 11px;border-radius:7px;
+    background:var(--paper-2);border:1px solid var(--line);font-size:12.5px;font-weight:700;
+    color:var(--ink-2);font-variant-numeric:tabular-nums;white-space:nowrap;
+  }
+  .pill b{color:var(--accent);font-weight:800}
+  .pill.warn{border-color:#eccfa0;background:var(--gold-soft);color:var(--gold)}
+  .btn{
+    height:29px;padding:0 12px;border-radius:7px;border:1px solid var(--line-2);background:var(--paper);
+    font-size:12.5px;font-weight:700;color:var(--ink-2);display:inline-flex;align-items:center;gap:6px;
+    transition:background .15s,border-color .15s,color .15s;white-space:nowrap;
+  }
+  .btn:hover{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+  .btn kbd{
+    font-family:inherit;font-size:10.5px;background:var(--bg);border:1px solid var(--line-2);
+    border-radius:4px;padding:0 4px;line-height:15px;color:var(--ink-3);font-weight:700;
+  }
+  #menuBtn{display:none}
+
+  /* ══════════ 主体 ══════════ */
+  #body{height:calc(100% - 52px - 54px);display:flex;overflow:hidden}
+
+  /* ── 侧栏 ── */
+  #side{
+    width:var(--side-w);flex:none;background:var(--paper);border-right:1px solid var(--line);
+    overflow-y:auto;padding:12px 10px 20px;transition:margin-left .22s ease;
+  }
+  #app.fold #side{margin-left:calc(-1 * var(--side-w))}
+  .side-h{font-size:10.5px;font-weight:800;letter-spacing:.14em;color:var(--ink-4);padding:6px 8px 8px;text-transform:uppercase}
+  .nav-item{
+    display:flex;gap:9px;align-items:flex-start;padding:8px 10px;border-radius:8px;cursor:pointer;
+    border:1px solid transparent;margin-bottom:2px;transition:background .13s,border-color .13s;
+  }
+  .nav-item:hover{background:var(--paper-2);border-color:var(--line)}
+  .nav-item.on{background:var(--accent-soft);border-color:#bfd8d1}
+  .nav-item .no{
+    flex:none;width:20px;height:20px;border-radius:6px;background:var(--bg);border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:800;color:var(--ink-3);
+    font-variant-numeric:tabular-nums;margin-top:2px;
+  }
+  .nav-item.on .no{background:var(--accent);border-color:var(--accent);color:#fff}
+  .nav-item .tx{font-size:12.5px;font-weight:700;line-height:1.5;color:var(--ink-2)}
+  .nav-item.on .tx{color:var(--accent)}
+  .nav-item .tm{font-size:10.5px;color:var(--ink-4);font-variant-numeric:tabular-nums;margin-top:1px}
+  .nav-item.done .no{background:var(--green-soft);border-color:#bfe0cb;color:var(--green)}
+  .side-sep{height:1px;background:var(--line);margin:10px 8px}
+
+  /* ── 主区 ── */
+  #main{flex:1;overflow-y:auto;overflow-x:hidden;padding:24px 28px 40px;scroll-behavior:smooth}
+  .scene{max-width:1080px;margin:0 auto}
+
+  .sc-head{display:flex;align-items:flex-start;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+  .sc-no{
+    flex:none;width:44px;height:44px;border-radius:11px;background:var(--accent);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800;
+    font-variant-numeric:tabular-nums;
+  }
+  .sc-t{flex:1;min-width:200px}
+  .sc-t h1{margin:0;font-size:23px;font-weight:800;letter-spacing:-.02em;line-height:1.35}
+  .sc-t .sub{font-size:13px;color:var(--ink-3);margin-top:3px}
+  .sc-badges{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+  .bdg{
+    font-size:11.5px;font-weight:800;padding:3px 9px;border-radius:6px;line-height:1.6;white-space:nowrap;
+    background:var(--accent-soft);color:var(--accent);font-variant-numeric:tabular-nums;
+  }
+  .bdg.g{background:var(--green-soft);color:var(--green)}
+  .bdg.r{background:var(--red-soft);color:var(--red)}
+  .bdg.y{background:var(--gold-soft);color:var(--gold)}
+  .bdg.n{background:#f0f2f4;color:var(--ink-3)}
+
+  /* ── 区块 ── */
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin-bottom:14px}
+  .card.tight{padding:16px 18px}
+  .card-h{
+    display:flex;align-items:center;gap:9px;font-size:12px;font-weight:800;letter-spacing:.1em;
+    color:var(--ink-4);text-transform:uppercase;margin-bottom:13px;
+  }
+  .card-h .ic{width:16px;height:16px;flex:none;color:var(--accent)}
+  .card-h.script .ic{color:var(--accent)}
+  .card-h.act .ic{color:var(--gold)}
+  .card-h.evc .ic{color:var(--green)}
+
+  /* ── 讲稿 ── */
+  .line{margin:0 0 11px;font-size:16px;line-height:1.85;color:var(--ink-2)}
+  .line:last-child{margin-bottom:0}
+  .line.big{
+    font-size:20px;font-weight:800;line-height:1.7;color:var(--ink);letter-spacing:-.01em;
+    padding:12px 16px;background:var(--accent-soft);border-left:4px solid var(--accent);
+    border-radius:0 9px 9px 0;
+  }
+  .line.big.gold{background:var(--gold-soft);border-left-color:#d9b463;color:#6f4f0e}
+  .line.big.red{background:var(--red-soft);border-left-color:#e0928c;color:#8d2b25}
+  .line em{font-style:normal;background:#fdf0d0;color:#7a5510;font-weight:800;padding:1px 6px;border-radius:4px}
+  .line code{background:var(--paper-2);border:1px solid var(--line);border-radius:4px;padding:1px 5px;font-size:13.5px;color:var(--accent)}
+
+  /* ── 动作清单 ── */
+  ol.acts{margin:0;padding:0;list-style:none;counter-reset:a}
+  ol.acts li{
+    counter-increment:a;position:relative;padding:9px 12px 9px 40px;border-radius:9px;
+    font-size:14.5px;line-height:1.75;margin-bottom:5px;background:var(--paper-2);border:1px solid var(--line);
+  }
+  ol.acts li::before{
+    content:counter(a);position:absolute;left:11px;top:10px;width:20px;height:20px;border-radius:6px;
+    background:var(--gold-soft);border:1px solid #e8d3a6;color:var(--gold);font-size:11px;font-weight:800;
+    display:flex;align-items:center;justify-content:center;
+  }
+  ol.acts li.hot{background:var(--red-soft);border-color:#f0cdc9}
+  ol.acts li.hot::before{background:#f6d6d2;border-color:#e5b3ad;color:var(--red)}
+  ol.acts li .tagmini{
+    font-size:10.5px;font-weight:800;color:var(--red);background:#fff;border:1px solid #ecc9c4;
+    border-radius:4px;padding:0 5px;margin-left:6px;line-height:16px;display:inline-block;vertical-align:1px;
+  }
+  ol.acts li code{background:#fff;border:1px solid var(--line);border-radius:4px;padding:0 5px;font-size:13px;color:var(--accent)}
+  ol.acts li b{color:var(--ink)}
+
+  /* ── 证据区 ── */
+  .ev-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:11px}
+  .ev{
+    border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--paper-2);
+    cursor:zoom-in;transition:border-color .15s,box-shadow .15s,transform .15s;
+  }
+  .ev:hover{border-color:var(--accent);box-shadow:0 4px 14px rgba(23,86,74,.13);transform:translateY(-1px)}
+  .ev .im{display:block;width:100%;height:132px;object-fit:cover;object-position:top center;background:#e9edee}
+  .ev .cap{padding:7px 10px;font-size:12px;font-weight:700;color:var(--ink-2);line-height:1.5;border-top:1px solid var(--line);background:var(--paper)}
+  .ev.wide{grid-column:1/-1}
+  .ev.wide .im{height:auto;max-height:520px;object-fit:contain;object-position:top center}
+
+  /* ── 视频 ── */
+  .vid-wrap{border-radius:12px;overflow:hidden;background:#0d1117;border:1px solid var(--line-2)}
+  .vid-wrap video{display:block;width:100%;height:auto;background:#0d1117}
+
+  /* ── 表格 ── */
+  table.t{width:100%;border-collapse:collapse;font-size:13.5px;margin:0}
+  table.t thead th{
+    background:var(--paper-2);border:1px solid var(--line-2);border-bottom:2px solid var(--line-2);
+    padding:9px 12px;text-align:left;font-weight:800;font-size:12.5px;color:var(--ink-2);line-height:1.55;
+  }
+  table.t td{border:1px solid var(--line);padding:9px 12px;vertical-align:top;line-height:1.72}
+  table.t tbody tr:nth-child(even) td{background:var(--paper-2)}
+  table.t td.k{font-weight:800;color:var(--accent);background:var(--accent-soft)}
+  table.t td.num{font-variant-numeric:tabular-nums;font-weight:800;white-space:nowrap}
+  table.t .star{color:var(--gold);font-weight:800}
+
+  /* ── 三层卡 ── */
+  .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+  .lvl{border:1px solid var(--line);border-radius:11px;padding:17px 18px;background:var(--paper)}
+  .lvl .n{font-size:11.5px;font-weight:800;color:var(--accent);letter-spacing:.08em;margin-bottom:5px}
+  .lvl .h{font-size:16px;font-weight:800;margin-bottom:3px;line-height:1.45}
+  .lvl .r{font-size:12.5px;color:var(--ink-3);margin-bottom:11px}
+  .lvl .d{font-size:13.5px;color:var(--ink-2);line-height:1.75;border-top:1px dashed var(--line-2);padding-top:11px}
+  .lvl .job{display:inline-block;font-size:11.5px;font-weight:800;background:var(--red-soft);color:var(--red);border-radius:5px;padding:2px 8px;margin-bottom:9px}
+
+  /* ── 报价卡 ── */
+  .price{display:grid;grid-template-columns:repeat(auto-fit,minmax(228px,1fr));gap:12px}
+  .pc{border:1px solid var(--line-2);border-radius:12px;padding:18px 19px;background:var(--paper);position:relative}
+  .pc.hero{border:2px solid var(--accent);background:var(--accent-soft)}
+  .pc .badge{position:absolute;top:-9px;right:15px;background:var(--accent);color:#fff;font-size:10.5px;font-weight:800;padding:2px 9px;border-radius:5px;letter-spacing:.05em}
+  .pc .pn{font-size:15px;font-weight:800;margin-bottom:1px}
+  .pc .pd{font-size:12px;color:var(--ink-3);margin-bottom:13px}
+  .pc .pv{font-size:27px;font-weight:800;color:var(--accent);letter-spacing:-.025em;line-height:1.15;font-variant-numeric:tabular-nums}
+  .pc .pm{font-size:12px;color:var(--ink-3);margin:2px 0 12px;font-variant-numeric:tabular-nums}
+  .pc .pl{font-size:12.5px;color:var(--ink-2);line-height:1.72;border-top:1px dashed var(--line-2);padding-top:11px}
+
+  /* ── 提示条 ── */
+  .tip{
+    display:flex;gap:10px;align-items:flex-start;padding:12px 15px;border-radius:9px;
+    background:var(--gold-soft);border:1px solid #ecd9b0;font-size:13.5px;color:#6f4f0e;line-height:1.7;margin-top:12px;
+  }
+  .tip .ic{flex:none;width:16px;height:16px;margin-top:3px;color:var(--gold)}
+  .tip.red{background:var(--red-soft);border-color:#f0cdc9;color:#8d2b25}
+  .tip.red .ic{color:var(--red)}
+  .tip.green{background:var(--green-soft);border-color:#c4e2d1;color:#22603c}
+  .tip.green .ic{color:var(--green)}
+  .tip b{color:inherit;font-weight:800}
+
+  /* ══════════ 底栏 ══════════ */
+  #foot{
+    height:54px;background:var(--paper);border-top:1px solid var(--line);
+    display:flex;align-items:center;gap:14px;padding:0 18px;position:relative;z-index:30;
+  }
+  #dots{display:flex;gap:5px;flex:1;align-items:center;flex-wrap:wrap}
+  .dot2{
+    width:22px;height:5px;border-radius:3px;background:var(--line-2);cursor:pointer;border:0;padding:0;
+    transition:background .15s,width .15s;
+  }
+  .dot2:hover{background:var(--ink-4)}
+  .dot2.on{background:var(--accent);width:34px}
+  .dot2.done{background:var(--green)}
+  #foot .btn{height:34px;padding:0 16px;font-size:13.5px}
+  #foot .btn:disabled{opacity:.35;cursor:not-allowed}
+  #foot .btn.pri{background:var(--accent);border-color:var(--accent);color:#fff}
+  #foot .btn.pri:hover{background:var(--accent-2);border-color:var(--accent-2);color:#fff}
+
+  /* ══════════ 灯箱 ══════════ */
+  #lb{
+    position:fixed;inset:0;background:rgba(12,20,24,.9);z-index:100;display:none;
+    align-items:center;justify-content:center;padding:28px;cursor:zoom-out;
+  }
+  #lb.on{display:flex}
+  #lb img{max-width:100%;max-height:calc(100vh - 120px);border-radius:8px;box-shadow:0 20px 60px rgba(0,0,0,.5);background:#fff}
+  #lb .cap{position:absolute;bottom:24px;left:0;right:0;text-align:center;color:#dbe4e7;font-size:13.5px;font-weight:600}
+  #lb .x{position:absolute;top:18px;right:22px;color:#fff;font-size:26px;line-height:1;background:none;border:0;opacity:.7}
+  #lb .x:hover{opacity:1}
+
+  /* ══════════ 应答口径抽屉 ══════════ */
+  #qaWrap{
+    position:fixed;inset:0;z-index:110;display:none;
+  }
+  #qaWrap.on{display:block}
+  #qaMask{position:absolute;inset:0;background:rgba(12,20,24,.42)}
+  #qa{
+    position:absolute;top:0;right:0;bottom:0;width:min(640px,94vw);background:var(--paper);
+    box-shadow:-14px 0 44px rgba(0,0,0,.18);display:flex;flex-direction:column;
+    animation:slideIn .22s ease;
+  }
+  @keyframes slideIn{from{transform:translateX(28px);opacity:.4}to{transform:none;opacity:1}}
+  #qa header{
+    height:54px;flex:none;display:flex;align-items:center;gap:10px;padding:0 20px;
+    border-bottom:1px solid var(--line);font-weight:800;font-size:15px;
+  }
+  #qa header .sp{flex:1}
+  #qa .list{overflow-y:auto;padding:16px 20px 30px}
+  .qa-i{border:1px solid var(--line);border-radius:10px;margin-bottom:10px;overflow:hidden}
+  .qa-i .q{
+    padding:11px 14px;background:var(--paper-2);font-weight:800;font-size:13.5px;color:var(--ink);
+    cursor:pointer;display:flex;gap:9px;align-items:flex-start;line-height:1.6;
+  }
+  .qa-i .q .ic{flex:none;color:var(--accent);font-weight:800;font-size:12.5px;margin-top:2px}
+  .qa-i .a{padding:12px 14px;font-size:13.5px;color:var(--ink-2);line-height:1.78;display:none;border-top:1px solid var(--line)}
+  .qa-i.open .a{display:block}
+  .qa-i .a b{color:var(--accent)}
+
+  /* ══════════ 提示 toast ══════════ */
+  #toast{
+    position:fixed;left:50%;bottom:74px;transform:translate(-50%,14px);z-index:200;
+    background:#14222a;color:#fff;font-size:13px;font-weight:700;padding:10px 18px;border-radius:9px;
+    opacity:0;transition:opacity .2s,transform .2s;pointer-events:none;box-shadow:0 8px 26px rgba(0,0,0,.24);
+  }
+  #toast.on{opacity:1;transform:translate(-50%,0)}
+
+  /* ══════════ 封面幕 ══════════ */
+  .cover{padding:12px 0 0}
+  .cover .kicker{font-size:12px;font-weight:800;letter-spacing:.16em;color:var(--accent);text-transform:uppercase;margin-bottom:12px}
+  .cover h1.ct{font-size:40px;font-weight:800;letter-spacing:-.03em;line-height:1.22;margin:0 0 14px}
+  .cover .lead{font-size:17px;color:var(--ink-2);line-height:1.8;max-width:760px;margin:0 0 26px}
+  .cover .meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:11px;margin-bottom:22px}
+  .cover .mc{border:1px solid var(--line);border-radius:11px;padding:15px 17px;background:var(--paper)}
+  .cover .mc .k{font-size:11.5px;font-weight:800;color:var(--ink-4);letter-spacing:.08em;margin-bottom:5px}
+  .cover .mc .v{font-size:15px;font-weight:800;color:var(--ink);line-height:1.55}
+  .cover .mc .v code{font-size:13.5px;color:var(--accent);background:var(--accent-soft);padding:1px 6px;border-radius:4px}
+  .cover .mc .d{font-size:12px;color:var(--ink-3);margin-top:4px;line-height:1.65}
+  .keys{display:flex;gap:9px;flex-wrap:wrap}
+  .keycap{
+    display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line-2);border-radius:8px;
+    padding:6px 12px;background:var(--paper);font-size:12.5px;color:var(--ink-2);font-weight:600;
+  }
+  .keycap kbd{
+    font-family:inherit;font-size:11.5px;font-weight:800;background:var(--paper-2);border:1px solid var(--line-2);
+    border-bottom-width:2px;border-radius:5px;padding:1px 7px;color:var(--ink);
+  }
+
+  /* ══════════ 响应式 ══════════ */
+  @media (max-width:900px){
+    #menuBtn{display:inline-flex}
+    #side{
+      position:fixed;top:52px;bottom:54px;left:0;z-index:40;box-shadow:8px 0 30px rgba(0,0,0,.13);
+      margin-left:calc(-1 * var(--side-w));
+    }
+    #app.fold #side{margin-left:0}
+    #main{padding:16px 15px 34px}
+    .cover h1.ct{font-size:29px}
+    .cover .lead{font-size:15.5px}
+    .sc-no{width:38px;height:38px;font-size:15px;border-radius:9px}
+    .sc-t h1{font-size:19.5px}
+    .card{padding:16px 15px}
+    .line.big{font-size:17.5px}
+    #brand small{display:none}
+  }
+
+  /* ══════════ 打印 ══════════ */
+  @media print{
+    html,body{height:auto;overflow:visible;background:#fff;font-size:11.5px}
+    #top,#foot,#side,#lb,#qaWrap,#toast{display:none!important}
+    #body{display:block;height:auto;overflow:visible}
+    #main{overflow:visible;padding:0}
+    .scene{max-width:100%;display:block!important}
+    .card{border:none;border-top:1px solid #ddd;border-radius:0;padding:10px 0;break-inside:avoid}
+    .card-h{margin-bottom:7px}
+    .ev .im{height:auto;max-height:300px}
+    .ev-grid{grid-template-columns:repeat(3,1fr)}
+    .price{grid-template-columns:repeat(3,1fr)}
+    .vid-wrap{display:none}
+    @page{margin:12mm}
+  }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- ═══ 顶栏 ═══ -->
+  <header id="top">
+    <button class="btn" id="menuBtn" title="收起/展开目录">☰</button>
+    <div id="brand"><span class="dot"></span>一镜到底 · 演示推演台 <small>嘉法狮中国数字营销自动化平台</small></div>
+    <div class="top-sp"></div>
+    <span class="pill" id="pillScene">第 1 / 11 幕</span>
+    <span class="pill" id="pillTime">已用 00:00</span>
+    <button class="btn" id="btnTimer">计时</button>
+    <button class="btn" id="btnQA">应答口径 <kbd>Q</kbd></button>
+    <button class="btn" id="btnFull"><span id="fullTx">全屏</span> <kbd>F</kbd></button>
+  </header>
+
+  <!-- ═══ 主体 ═══ -->
+  <div id="body">
+    <aside id="side">
+      <div class="side-h">推演目录</div>
+      <div id="nav"></div>
+      <div class="side-sep"></div>
+      <div class="side-h">演示素材</div>
+      <div class="nav-item" id="lnkProto">
+        <span class="no">↗</span>
+        <span><span class="tx">社媒模块可交互原型</span><span class="tm">prototype.html</span></span>
+      </div>
+      <div class="nav-item" id="lnkSys">
+        <span class="no">↗</span>
+        <span><span class="tx">真实系统（本机）</span><span class="tm">localhost:3000</span></span>
+      </div>
+    </aside>
+
+    <main id="main"><div class="scene" id="scene"></div></main>
+  </div>
+
+  <!-- ═══ 底栏 ═══ -->
+  <footer id="foot">
+    <button class="btn" id="btnPrev">← 上一幕</button>
+    <div id="dots"></div>
+    <button class="btn pri" id="btnNext">下一幕 →</button>
+  </footer>
+</div>
+
+<!-- ═══ 灯箱 ═══ -->
+<div id="lb"><button class="x" id="lbX">×</button><img id="lbImg" alt=""><div class="cap" id="lbCap"></div></div>
+
+<!-- ═══ 应答口径 ═══ -->
+<div id="qaWrap">
+  <div id="qaMask"></div>
+  <aside id="qa">
+    <header>
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#17564a" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.6 2.6 0 1 1 3.4 2.5c-.6.2-.9.7-.9 1.3v.4"/><circle cx="12" cy="17" r=".6" fill="#17564a"/></svg>
+      客户最可能问的十个问题
+      <span class="sp"></span>
+      <button class="btn" id="qaClose">关闭 Esc</button>
+    </header>
+    <div class="list" id="qaList"></div>
+  </aside>
+</div>
+
+<div id="toast"></div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   数据层：11 幕
+   ═══════════════════════════════════════════════════════════ */
+const A = 'assets/';
+
+const SCENES = [
+  {
+    id:'cover', no:1, kind:'cover',
+    title:'一镜到底 · 演示推演台',
+    sub:'嘉法狮中国 · 年度数字资产运营服务方案',
+    time:'', dur:'',
+    lead:'按 ← → 或空格一屏一屏往下推。左边是目录，随时可跳。中途被问到问题，按 Q 调出应答口径。',
+    meta:[
+      {k:'演示时长', v:'60 分钟 · 11 幕', d:'开场定调 → 系统实证 → 商务收口'},
+      {k:'主角', v:'真实系统 + 原型', d:'不是 PPT 讲功能，是当场演给他看'},
+      {k:'核心逻辑', v:'承诺 ↔ 证据 对照', d:'每一层服务承诺，都有一处现场证据'},
+      {k:'系统入口', v:'<code>localhost:3000</code>', d:'前台 / · 后台 /admin/（本机演示用）'}
+    ],
+    keys:[
+      {k:'← →', t:'上下幕'},{k:'空格', t:'下一幕'},{k:'F', t:'全屏'},{k:'Q', t:'应答口径'},
+      {k:'S', t:'收起目录'},{k:'Home/End', t:'首/末幕'}
+    ],
+    tip:{type:'green', tx:'<b>开始前 30 分钟：</b>确认 3000 端口服务在跑（长时间空闲会被回收）；四个标签页预先开好；把这条链接在副屏打开当提词器。'}
+  },
+
+  {
+    id:'open', no:2,
+    title:'开场定调',
+    sub:'不介绍公司、不念目录。这一句是全场的地基。',
+    time:'00:00–00:04', dur:'4 min',
+    script:[
+      {big:1, t:'「2.0 系统把舞台搭好了。今天想跟您聊的是——台上有没有人。」'},
+      {t:'「过去一段时间，我们为贵司完成了中文官网 2.0 系统的重建。它的定位很明确：弥补 1.0 在<b>使用体验</b>上的不足。」'},
+      {t:'「但恰恰因为它是一次『补课』，它的价值<b>很难用一次性项目款来衡量</b>。」'},
+      {big:1, gold:1, t:'「网站是资产，内容是复利，运营是让复利发生的那只手。贵司需要买的不是更多的页面，而是让页面持续产生影响力的机制。」'},
+      {t:'说完这一句，<b>停顿两秒</b>，不要解释，直接进视频。'}
+    ],
+    acts:[
+      '不介绍公司背景、不念议程——客户没耐心听这些',
+      '只抛出主张句，然后停住',
+      '语速放慢。这 4 分钟只干一件事：让客户接受「这不是交付，是经营」'
+    ],
+    note:{tx:'这一句是整场的地基。如果客户在开场就进入「又要花钱」的防备心态，后面的所有证据都会被打折扣。'}
+  },
+
+  {
+    id:'video', no:3,
+    title:'全景视频 · 60 秒',
+    sub:'目的不是展示，是让客户先建立一张地图。',
+    time:'00:04–00:06', dur:'2 min',
+    script:[
+      {big:1, t:'「先用 60 秒给您一个地图。看完您会知道，待会儿我要拆的是哪几块。」'},
+      {t:'播完接一句过渡：<b>「这是概览，下面我一块一块拆给您看。」</b>'}
+    ],
+    acts:[
+      '先确认音量，再点播放（现场最常翻车的就是没声音）',
+      '播的时候不要说话，也不要切窗口',
+      '如果投影没声音，直接说「这段有配音，我口头补一下」，别现场调设备'
+    ],
+    video:{src:'video.mp4', poster:A+'video-poster.jpg'},
+    tip:{tx:'视频是本页内嵌的本地文件，断网也能播。演示前建议先把整页点开一次让它进入缓存。'}
+  },
+
+  {
+    id:'s1', no:4,
+    title:'主线① 内容生产闭环',
+    sub:'「市场部发一条新闻，需要多久？」',
+    time:'00:06–00:22', dur:'16 min',
+    script:[
+      {big:1, t:'「先说最实际的：市场部发一条新闻，需要多久？」'},
+      {t:'「1.0 时代的答案是：走外包排期。2.0 的答案是 <b>30 秒</b>。」'},
+      {t:'「内容更新的主动权，回到了市场部手上。」'},
+      {big:1, gold:1, t:'「改字这件事，本来就不该是一件工程。」'}
+    ],
+    acts:[
+      {t:'切到<b>后台</b> → 内容管理，新建一条内容（用测试标题，如「测试 · 演示用」）'},
+      {t:'填标题 / 摘要 / 正文 / 配图 → 保存。说：<i>「字段是结构化的，不是一个大文本框——以后才能被搜索、被筛选、被统计。」</i>'},
+      {t:'切到<b>前台</b>列表页 → <code>Ctrl+F5</code> 强刷 → 指出刚发布的那条。说：<i>「出来了。以前这一步要走外包排期，现在是您的同事点两下。」</i>'},
+      {hot:1, t:'后台 → 页面管理 → 打开某页 → 进<b>预览编辑</b> → 直接点选一段文字改掉 → 保存', m:'全场最强'},
+      {hot:1, t:'切前台 → 强刷 → 说：<i>「不用找开发、不用动版式、不用等排期。所见即所得。」</i>'},
+      {hot:1, t:'<b>把鼠标交给客户：</b>「您说改哪句，我当场改给您看。」'}
+    ],
+    ev:[
+      {f:'admin-16-content-list.jpg', c:'后台 · 内容管理列表'},
+      {f:'admin-08-news-list.jpg', c:'后台 · 新闻与活动列表'},
+      {f:'admin-page-preview.jpg', c:'后台 · 页面预览原位编辑 ★'},
+      {f:'site-01-home.jpg', c:'前台 · 首页（强刷后生效）'}
+    ],
+    tip:{type:'red', tx:'<b>这一段的第 4–6 步是全场唯一的「高光时刻」，时间再紧也不能砍。</b>真要压缩，砍第 1–3 步（口头带过），保留预览编辑。演完记得把测试内容改回来。'}
+  },
+
+  {
+    id:'s2', no:5,
+    title:'主线② 产品资料中台',
+    sub:'「结构化底库不是概念，是能查、能筛、能改的实体。」',
+    time:'00:22–00:36', dur:'14 min',
+    script:[
+      {big:1, t:'「这是底库。每个原料有统一的字段集，不是散落在各个页面里的文案。」'},
+      {t:'「INCI、功能宣称、应用领域、认证、用量建议——<b>字段对齐之后，才谈得上批量搜索、批量筛选、批量合规检查</b>。」'},
+      {t:'「配方是 B2B 原料最有说服力的内容形态，现在可以一条条攒起来了。」'},
+      {t:'「药用是另一条业务线，<b>共用同一套后台逻辑，不额外增加管理成本</b>。」'},
+      {big:1, gold:1, t:'「内容能被找到，靠的不是把关键词堆上去，是后面这套标签索引在起作用。」'}
+    ],
+    acts:[
+      '后台 → <b>个人护理产品列表</b>（先给客户看底库的规模）',
+      '打开一条产品的<b>编辑抽屉</b>，逐字段念：INCI / 功能宣称 / 应用领域 / 认证 / 用量建议',
+      '后台 → <b>配方</b>模块，展示配方案例的结构',
+      '后台 → <b>药用辅料</b>模块，指出记录条数',
+      {hot:1, t:'后台 → <b>标签管理</b>页，展示分类体系；再切<b>前台</b>演示按标签筛选 → 指出联动结果'},
+      '切前台 → 站内搜索，演示多类型检索'
+    ],
+    ev:[
+      {f:'admin-04-pc-list.jpg', c:'后台 · 个人护理产品列表'},
+      {f:'admin-05-pc-edit.jpg', c:'后台 · 产品编辑抽屉（统一字段集）'},
+      {f:'admin-07-formula-list.jpg', c:'后台 · 配方列表'},
+      {f:'admin-06-pharma-list.jpg', c:'后台 · 药用辅料列表'},
+      {f:'admin-21-tag-manage.jpg', c:'后台 · 标签体系治理 ★'},
+      {f:'site-02-pc-finder.jpg', c:'前台 · 个人护理原料检索'},
+      {f:'site-04-formula-finder.jpg', c:'前台 · 配方检索'},
+      {f:'site-07-search.jpg', c:'前台 · 站内搜索'}
+    ],
+    tip:{tx:'这一段信息密度最高，客户最容易走神。<b>别报数字，讲故事：</b>「一个配方师来查某个原料，他能看到什么？」'}
+  },
+
+  {
+    id:'s3', no:6,
+    title:'主线③ 数据与热度',
+    sub:'回答老板的那个问题：「这个月数字投入带来了什么？」',
+    time:'00:36–00:44', dur:'8 min',
+    script:[
+      {big:1, t:'「现在回答一个问题：这个月数字投入带来了什么？」'},
+      {t:'「这套数据现在是<b>后台里现成的</b>，不是让您再去装一个分析工具。」'},
+      {t:'「注意口径：这不是流量，是<b>业务对象的热度</b>——哪个原料、哪份资料被看得最多。」'},
+      {t:'过渡到第三层：<b>「数据能看，但要看懂、要变成行动，是另一件事——这就是第三层做的事。」</b>'}
+    ],
+    acts:[
+      '后台 → <b>内容热度榜</b> → 指出排名靠前的业务对象',
+      '点进一条，说：<i>「这些数字，就是您在年度汇报里能摆到桌面上的东西。」</i>',
+      '后台 → 访问统计：访问量 / 热门页面 / 来源渠道 / 地域分布',
+      '顺势收口到第三层：月度数据报告 + 季度归因分析'
+    ],
+    ev:[
+      {f:'admin-content-heat-full.jpg', c:'后台 · 内容热度全览 ★', wide:1},
+      {f:'admin-03-content-heat.jpg', c:'后台 · 内容热度'},
+      {f:'admin-02-dashboard.jpg', c:'后台 · 工作台总览'}
+    ],
+    tip:{tx:'如果客户主动问起数据来源，老实说是系统自带的埋点统计（不是第三方工具），口径是<b>内容曝光与访问</b>，不承诺转化归因。'}
+  },
+
+  {
+    id:'s4', no:7,
+    title:'前瞻能力 · 社媒模块 + GEO',
+    sub:'先把话说清楚：这是原型，不是已经做好的功能。',
+    time:'00:44–00:52', dur:'8 min',
+    script:[
+      {big:1, red:1, t:'「这一块我要先说清楚：<b>这是原型，不是已经做好的功能。</b>」'},
+      {t:'「但它不是为了好看——它对应方案里<b>每年 20 个工作日的开发额度</b>。能点，就意味着 20 天可以变成真的。」'},
+      {big:1, gold:1, t:'「最打动市场部的一点在这：合规预检。写文案最怕的不是写得不好，是写得违规。」'},
+      {t:'「这一层是替您兜底的。」'}
+    ],
+    acts:[
+      '点开<b>可交互原型</b>（左下角目录里，或点卡片上的按钮）→ 内容工厂视图',
+      {hot:1, t:'切到<b>合规</b>视图 → 在预检框输入一句带「美白」的文案 → <b>当场被一级硬拦</b>', m:'必演'},
+      '讲渠道能力三级梯队：公众号可全自动 / 抖音与 B 站需申请 / 视频号小红书无接口',
+      '提 GEO：中文内容的密度，决定了在 AI 搜索里被引用的概率',
+      '说明边界：微博灰色地带、无接口的平台走人工流程'
+    ],
+    ev:[
+      {f:'proto-01-gen.jpg', c:'原型 · 内容工厂产出'},
+      {f:'proto-04-compliance.jpg', c:'原型 · 合规预检（输入「美白」被拦）★', wide:1},
+      {f:'proto-03-channels.jpg', c:'原型 · 渠道能力三级梯队'},
+      {f:'proto-05-geo.jpg', c:'原型 · 术语唯一真相表 + 法规状态'},
+      {f:'proto-06-probe.jpg', c:'原型 · AI 搜索引擎探测'},
+      {f:'proto-02-publish.jpg', c:'原型 · 发布任务与失败码'}
+    ],
+    link:{url:'prototype.html', label:'打开社媒模块可交互原型'},
+    tip:{type:'red', tx:'说「原型」这两个字的时候要<b>看着客户说</b>。这里诚实是加分项，而且它正好解释了第三层的开发额度为什么值钱。'}
+  },
+
+  {
+    id:'map', no:8,
+    title:'承诺 ↔ 证据 对照表',
+    sub:'这张表就是今天这场演示的全部逻辑。',
+    time:'', dur:'核心页',
+    script:[
+      {big:1, t:'「刚才演的每一处，都对应方案里的一条承诺。」'},
+      {t:'「换句话说：<b>您买的不是一份服务清单，是一套每天在运行的东西。</b>」'}
+    ],
+    table:{
+      head:['方案里的承诺','演示时的系统证据'],
+      rows:[
+        ['「内容更新不再需要外包排期」','后台新建一条 → 前台立刻可见'],
+        ['「产品与配方资料有了统一的结构化底库」','PC 产品 / 配方 / 药用辅料三套列表 + 编辑抽屉字段集'],
+        ['「标签体系的持续治理」','标签管理页 + 前台按标签筛选联动'],
+        ['「页面可以像搭积木一样预览、编辑、回填」','<span class="star">页面预览原位编辑：点选文字 → 改 → 保存 → 前台变</span>'],
+        ['「每月网站数据报告、内容热度榜」','内容热度页 + 访问统计'],
+        ['「内容合规检查（广告法违禁词、医疗功效红线）」','原型里的合规预检 —— 输入「美白」当场被拦'],
+        ['「中文内容密度决定专业客户心智中的位置」','站内多类型检索 + AI 搜索信源偏好'],
+        ['「每年 20 个工作日的定制开发额度」','社媒模块原型 —— 20 天就能从这变成真的']
+      ]
+    },
+    tip:{type:'green', tx:'这一页可以<b>停在屏幕上让客户看完</b>，不用急着过。它是把「感受」转成「结构」的那一步。'}
+  },
+
+  {
+    id:'levels', no:9,
+    title:'三层服务结构',
+    sub:'一句话一层。三层是递进的，不是并列的。',
+    time:'00:52–00:55', dur:'3 min',
+    script:[
+      {t:'「三层，一句话一层：」'},
+      {t:'「<b>第一层是保险</b>，解决停摆风险；<b>第二层是内容工厂</b>，解决资产闲置；<b>第三层是增长顾问</b>，解决有流量没结果。」'},
+      {big:1, t:'「没有第一层，第二三层无从谈起；只有第一层，系统只是个昂贵的展示柜。」'}
+    ],
+    levels:[
+      {n:'第一层', h:'基础保障', r:'系统健康年费', job:'解决停摆风险', d:'市场部最常见的三类突发都在这一层被消化：<b>网站打不开了</b>、<b>这张图版权有问题</b>、<b>这句话好像不能这么写</b>。它不是增长服务，是保险。'},
+      {n:'第二层', h:'内容运营', r:'本地化内容工厂', job:'解决资产闲置', d:'保证系统里持续有新的、专业的、中文的内容进来。<b>每月 4–6 篇</b>专业内容，按既有信息架构归档，直接入库、可直接发布。<b>投入产出比最陡的一段。</b>'},
+      {n:'第三层', h:'增长顾问', r:'数据驱动的市场支持', job:'解决有流量没结果', d:'让内容被看见、被使用、被转化为业务动作。含月度数据报告、季度深度分析、SEO、活动支持，以及<b>每年 20 个工作日</b>的开发额度。'}
+    ],
+    tip:{tx:'「没有第一层，第二三层无从谈起；只有第一层，系统只是个昂贵的展示柜」——这句话要<b>原样说出来</b>，它是三档报价的逻辑支点。'}
+  },
+
+  {
+    id:'price', no:10,
+    title:'报价与比价',
+    sub:'先给参照物，再给价格。顺序反了，价格就只是个数字。',
+    time:'00:55–00:58', dur:'3 min',
+    script:[
+      {t:'「这三个数字，应该和下面三样东西比，而不是和『做几个页面』比。」'}
+    ],
+    price:[
+      {n:'基础版', d:'稳 —— 系统别出事、资料别断档', v:'¥48,000', m:'含税 / 年 · 折合月均 ¥4,000', l:'第一层完整；第二层每月 2 篇（7 小时维护）；无第三层'},
+      {n:'成长版', d:'内容开始有节奏地积累', v:'¥128,000', m:'含税 / 年 · 折合月均 ¥10,667', l:'第一层完整；第二层完整（每月 4–6 篇）；第三层含数据报告 + 基础 SEO', hero:1, badge:'建议主推'},
+      {n:'领先版', d:'有明确数字化 KPI，或要强化行业存在感', v:'¥228,000', m:'含税 / 年 · 折合月均 ¥19,000', l:'三层完整 + 加急通道；含活动支持与 20 个工作日开发额度'}
+    ],
+    table:{
+      head:['比价参照物','价格 / 特点'],
+      rows:[
+        ['一名内容营销专员','<b>25–32 万元 / 年</b> —— 单人、单一技能、含管理成本'],
+        ['一家品牌代理公司的年度数字服务','<b>15–30 万元 / 年</b> —— 通常<b>不含</b>技术系统维护'],
+        ['零散外包 + 项目制','单次报价灵活，但<b>年度总额不可预期</b>，且没有连续性']
+      ]
+    },
+    extra:[
+      '「<b>基础版</b>约等于一名专员<b>一个半月</b>的用工成本，覆盖一整年的系统保障。」',
+      '「<b>领先版</b>约等于一名专员<b>十个月</b>的成本，但交付的是『系统运维 + 内容生产 + 数据分析 + 活动支持』四类角色的合力。」',
+      '<b>升级机制：</b>三档支持年度内升级，已付费用按剩余月份折算抵扣。',
+      '<b>付款：</b>建议 40% / 30% / 30% 三期。<b>知识产权：</b>内容、素材、代码全部归嘉法狮中国所有。',
+      '<b>不在年费内：</b>全站视觉重设计、多语言站点新建、与 ERP/CRM 深度集成、大规模付费投放的代理执行。'
+    ],
+    tip:{tx:'客户问「为什么不能继续按项目做」时，回到<b>项目制三个天花板</b>：需求密度不足、知识不沉淀、成本不可预期。'}
+  },
+
+  {
+    id:'close', no:11,
+    title:'30 天承诺与下一步',
+    sub:'把风险从客户端移到我们这边。说完停顿两秒。',
+    time:'00:58–01:00', dur:'2 min',
+    script:[
+      {t:'「如果贵司选择在 10 月内启动，我们承诺在<b>首月完成</b>四件事：」'}
+    ],
+    promise:[
+      '一次完整的中文站内容资产盘点报告（含缺口清单与优先级）',
+      '一份中文内容风格与术语指南',
+      '首批 <b>4 篇</b>可直接上线的高质量中文内容',
+      '一份未来 12 个月的内容运营路线图'
+    ],
+    guarantee:'若首月交付未达上述标准，贵司可无理由终止合作并退还已付费用。',
+    script2:[
+      {big:1, gold:1, t:'「数字资产的价值曲线是累积型的。第一年的内容，会在第三年持续带来搜索流量和客户信任。<b>每推迟一个季度，就是少一个季度的复利。</b>」'},
+      {t:'「我们建议从<b>成长版</b>开始，用一年时间，把中文站从『信息公告栏』变成『专业客户的决策工具』。」'}
+    ],
+    acts:[
+      {hot:1, t:'<b>不要问「您觉得怎么样」</b>——要问：<i>「需求对齐会放本周还是下周？」</i>'},
+      '给出具体到日期的下一步动作',
+      '记下客户在现场提出的每一个疑问，当天内书面答复'
+    ],
+    tip:{type:'red', tx:'不知道的<b>不要现场编</b>。说「这个我回去确认后今天内给您答复」，比编一个数字安全一百倍。'}
+  }
+];
+
+/* ── 应答口径 ── */
+const QA = [
+  ['为什么不能继续按项目做？我们有需求再找你们不就完了。','可以，但项目制有三个天花板：需求攒够再立项，时间窗口已经过去了；每个项目结束语境就散了，明年换人要重来；还有最实际的——您每年做预算时答不出数字这块要花多少。'],
+  ['基础版够用吗？','基础版解决的是「系统别出事」。但只有第一层，系统就是个昂贵的展示柜——内容没有人往里放，它三个月后就是档案柜。'],
+  ['凭什么比外面的代理公司贵 / 便宜？','品牌代理公司的年度数字服务大概 15–30 万，但通常不含技术系统维护。我们是「系统运维 + 内容生产 + 数据分析」一体，出问题不用您在两拨人之间传话。'],
+  ['内容质量怎么保证？','所有交付内容执行三道工序：<b>事实核对 + 合规检查 + 语言润色</b>。而且首月有硬承诺——不达标可以无理由终止并退款。'],
+  ['AI 生成的内容会有合规风险吗？','这正是我们把合规预检做进系统的原因。广告法违禁词、医疗功效宣称红线都有一级硬拦，写的时候就被挡掉，不是发出去再删。'],
+  ['20 个工作日开发额度用完了怎么办？','超出部分按 1,800 元/人日结算，需求先评估再进排期，不会不打招呼就产生费用。'],
+  ['内容的知识产权归谁？','全部归嘉法狮中国所有——内容、素材、代码都是。'],
+  ['你们能保证排名 / 流量增长吗？','我们不承诺具体排名，但承诺每月给您一份能读懂的数据报告和明确的行动项。搜索表现按季度复盘，含排名变化与流量增量。'],
+  ['中文内容真的有人看吗？我们的客户都在线下。','客户决策前会上网查这一步跑不掉——这个原料有没有中文资料、有没有人用过、有没有配方案例。中文内容的密度，直接决定嘉法狮在专业客户心智中的位置。'],
+  ['如果效果不好，能提前终止吗？','首月未达承诺标准可以无理由终止并退款，这是写进方案的。之后按合同条款走。']
+];
+
+/* ═══════════════════════════════════════════════════════════
+   视图
+   ═══════════════════════════════════════════════════════════ */
+const $ = s => document.querySelector(s);
+const ICONS = {
+  script:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>',
+  act:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>',
+  ev:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>',
+  tip:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg>',
+  ext:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14L21 3"/></svg>'
+};
+
+let cur = 0;
+const seen = new Set();
+function toast(msg, ms){
+  const t = $('#toast'); t.textContent = msg; t.classList.add('on');
+  clearTimeout(t._h); t._h = setTimeout(()=>t.classList.remove('on'), ms||1800);
+}
+
+function renderNav(){
+  $('#nav').innerHTML = SCENES.map((s,i)=>`
+    <div class="nav-item${i===cur?' on':''}${seen.has(i)&&i!==cur?' done':''}" data-go="${i}">
+      <span class="no">${s.no}</span>
+      <span>
+        <span class="tx">${s.title}</span>
+        <span class="tm">${s.time||s.dur||'—'}</span>
+      </span>
+    </div>`).join('');
+}
+
+function renderDots(){
+  $('#dots').innerHTML = SCENES.map((s,i)=>
+    `<button class="dot2${i===cur?' on':''}${seen.has(i)&&i!==cur?' done':''}" data-go="${i}" title="${s.title}"></button>`).join('');
+}
+
+function tipHTML(t){
+  if(!t) return '';
+  const cls = t.type ? ' '+t.type : '';
+  return `<div class="tip${cls}">${ICONS.tip}<div>${t.tx}</div></div>`;
+}
+
+function renderScene(){
+  const s = SCENES[cur];
+  seen.add(cur);
+  let h = '';
+
+  /* ── 封面 ── */
+  if(s.kind === 'cover'){
+    h += `<div class="cover">
+      <div class="kicker">Client Demo · One-Take Walkthrough</div>
+      <h1 class="ct">${s.title}</h1>
+      <p class="lead">${s.lead}</p>
+      <div class="meta">${s.meta.map(m=>`
+        <div class="mc"><div class="k">${m.k}</div><div class="v">${m.v}</div><div class="d">${m.d}</div></div>`).join('')}</div>
+      <div class="keys">${s.keys.map(k=>`<span class="keycap"><kbd>${k.k}</kbd>${k.t}</span>`).join('')}</div>
+      ${tipHTML(s.tip)}
+    </div>`;
+  } else {
+    /* ── 普通幕 ── */
+    h += `<div class="sc-head">
+      <div class="sc-no">${s.no}</div>
+      <div class="sc-t"><h1>${s.title}</h1><div class="sub">${s.sub||''}</div></div>
+      <div class="sc-badges">
+        ${s.time?`<span class="bdg">${s.time}</span>`:''}
+        ${s.dur?`<span class="bdg n">${s.dur}</span>`:''}
+      </div>
+    </div>`;
+
+    /* 讲稿 */
+    if(s.script && s.script.length){
+      h += `<div class="card"><div class="card-h script">${ICONS.script}讲稿</div>
+        ${s.script.map(l=>{
+          const cls = 'line' + (l.big?' big':'') + (l.gold?' gold':'') + (l.red?' red':'');
+          return `<p class="${cls}">${l.t}</p>`;
+        }).join('')}
+      </div>`;
+    }
+
+    /* 视频 */
+    if(s.video){
+      h += `<div class="card"><div class="card-h evc">${ICONS.ev}证据 · 视频</div>
+        <div class="vid-wrap"><video src="${s.video.src}" poster="${s.video.poster}" controls preload="metadata" playsinline></video></div>
+      </div>`;
+    }
+
+    /* 动作 */
+    if(s.acts && s.acts.length){
+      h += `<div class="card"><div class="card-h act">${ICONS.act}现场动作 · 按这个顺序演</div>
+        <ol class="acts">${s.acts.map(a=>{
+          const o = typeof a === 'string' ? {t:a} : a;
+          return `<li class="${o.hot?'hot':''}">${o.t}${o.m?`<span class="tagmini">${o.m}</span>`:''}</li>`;
+        }).join('')}</ol>
+      </div>`;
+    }
+
+    /* 表格 */
+    if(s.table){
+      h += `<div class="card"><div class="card-h">${ICONS.act}对照 / 参照</div>
+        <table class="t"><thead><tr>${s.table.head.map(x=>`<th>${x}</th>`).join('')}</tr></thead>
+        <tbody>${s.table.rows.map(r=>`<tr>${r.map((c,i)=>`<td class="${i===0?'k':''}">${c}</td>`).join('')}</tr>`).join('')}</tbody></table>
+      </div>`;
+    }
+
+    /* 三层 */
+    if(s.levels){
+      h += `<div class="card"><div class="card-h">${ICONS.act}三层结构</div>
+        <div class="cols">${s.levels.map(l=>`
+          <div class="lvl">
+            <div class="n">${l.n}</div>
+            <div class="h">${l.h}</div>
+            <div class="r">${l.r}</div>
+            <div class="job">${l.job}</div>
+            <div class="d">${l.d}</div>
+          </div>`).join('')}</div>
+      </div>`;
+    }
+
+    /* 报价 */
+    if(s.price){
+      h += `<div class="card"><div class="card-h">${ICONS.act}三档报价</div>
+        <div class="price">${s.price.map(p=>`
+          <div class="pc${p.hero?' hero':''}">
+            ${p.badge?`<div class="badge">${p.badge}</div>`:''}
+            <div class="pn">${p.n}</div><div class="pd">${p.d}</div>
+            <div class="pv">${p.v}</div><div class="pm">${p.m}</div>
+            <div class="pl">${p.l}</div>
+          </div>`).join('')}</div>
+      </div>`;
+    }
+
+    /* 附加要点 */
+    if(s.extra){
+      h += `<div class="card"><div class="card-h act">${ICONS.act}必须知道的口径</div>
+        <ul style="margin:0;padding-left:20px">${s.extra.map(x=>`<li class="line" style="margin-bottom:8px">${x}</li>`).join('')}</ul>
+      </div>`;
+    }
+
+    /* 30 天承诺 */
+    if(s.promise){
+      h += `<div class="card"><div class="card-h act">${ICONS.act}首月交付清单</div>
+        <ol class="acts">${s.promise.map(x=>`<li>${x}</li>`).join('')}</ol>
+        <p class="line big red" style="margin-top:14px">${s.guarantee}</p>
+      </div>`;
+    }
+
+    /* 证据 */
+    if(s.ev && s.ev.length){
+      h += `<div class="card"><div class="card-h evc">${ICONS.ev}证据 · 点图放大</div>
+        <div class="ev-grid">${s.ev.map(e=>`
+          <div class="ev${e.wide?' wide':''}" data-img="${A}${e.f}" data-cap="${e.c}">
+            <img class="im" src="${A}${e.f}" alt="${e.c}" loading="lazy">
+            <div class="cap">${e.c}</div>
+          </div>`).join('')}</div>
+      </div>`;
+    }
+
+    /* 外链按钮 */
+    if(s.link){
+      h += `<div class="card tight" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+        <span style="font-size:13.5px;color:var(--ink-3)">独立可交互应用，会在新标签页打开：</span>
+        <a class="btn" href="${s.link.url}" target="_blank" rel="noopener" style="text-decoration:none;color:var(--accent);border-color:var(--accent)">${ICONS.ext}${s.link.label}</a>
+      </div>`;
+    }
+
+    /* 后续讲稿 */
+    if(s.script2){
+      h += `<div class="card"><div class="card-h script">${ICONS.script}继续讲</div>
+        ${s.script2.map(l=>`<p class="line${l.big?' big':''}${l.gold?' gold':''}">${l.t}</p>`).join('')}
+      </div>`;
+    } else if(s.acts && s.acts[0] && s.acts[0].hot && !s.extra){
+      /* close 幕已用 acts 承载动作 */
+    }
+
+    if(s.note) h += tipHTML(s.note);
+    if(s.tip) h += tipHTML(s.tip);
+  }
+
+  $('#scene').innerHTML = h;
+  $('#main').scrollTop = 0;
+  $('#pillScene').textContent = `第 ${cur+1} / ${SCENES.length} 幕`;
+  $('#btnPrev').disabled = cur === 0;
+  $('#btnNext').textContent = cur === SCENES.length-1 ? '回到封面 ↺' : '下一幕 →';
+  renderNav(); renderDots();
+}
+
+function go(i){
+  if(i < 0) i = 0;
+  if(i >= SCENES.length) i = 0;
+  cur = i;
+  renderScene();
+}
+const next = () => go(cur === SCENES.length-1 ? 0 : cur+1);
+const prev = () => go(cur-1);
+
+/* ═══════════════════════════════════════════════════════════
+   交互
+   ═══════════════════════════════════════════════════════════ */
+document.addEventListener('click', e => {
+  const g = e.target.closest('[data-go]');
+  if(g){ go(+g.dataset.go); if(window.innerWidth <= 900) $('#app').classList.add('fold'); return; }
+  const ev = e.target.closest('.ev[data-img]');
+  if(ev){ openLB(ev.dataset.img, ev.dataset.cap); return; }
+});
+
+function openLB(src, cap){
+  $('#lbImg').src = src; $('#lbCap').textContent = cap || ''; $('#lb').classList.add('on');
+}
+$('#lb').addEventListener('click', () => $('#lb').classList.remove('on'));
+
+$('#btnNext').addEventListener('click', next);
+$('#btnPrev').addEventListener('click', prev);
+$('#menuBtn').addEventListener('click', () => $('#app').classList.toggle('fold'));
+
+/* 全屏 */
+$('#btnFull').addEventListener('click', () => {
+  if(!document.fullscreenElement){ document.documentElement.requestFullscreen && document.documentElement.requestFullscreen(); $('#fullTx').textContent = '退出'; }
+  else { document.exitFullscreen && document.exitFullscreen(); $('#fullTx').textContent = '全屏'; }
+});
+document.addEventListener('fullscreenchange', () => { $('#fullTx').textContent = document.fullscreenElement ? '退出' : '全屏'; });
+
+/* 计时 */
+let t0 = 0, tick = null;
+function fmt(ms){
+  const s = Math.floor(ms/1000);
+  return String(Math.floor(s/60)).padStart(2,'0') + ':' + String(s%60).padStart(2,'0');
+}
+$('#btnTimer').addEventListener('click', () => {
+  if(tick){ clearInterval(tick); tick = null; $('#btnTimer').textContent = '继续'; }
+  else {
+    if(!t0) t0 = Date.now() - 0;
+    const base = $('#pillTime').dataset.ms ? +$('#pillTime').dataset.ms : 0;
+    t0 = Date.now() - base;
+    tick = setInterval(() => {
+      const ms = Date.now() - t0;
+      $('#pillTime').dataset.ms = ms;
+      $('#pillTime').textContent = '已用 ' + fmt(ms);
+      const s = SCENES[cur];
+      if(s.time){
+        const parts = s.time.split('–')[1].split(':');
+        const target = (+parts[0]*60 + +parts[1]) * 1000;
+        $('#pillTime').classList.toggle('warn', ms > target + 120000);
+      }
+    }, 500);
+    $('#btnTimer').textContent = '暂停';
+    toast('计时开始 · 落后计划 2 分钟会变黄');
+  }
+});
+
+/* 应答口径 */
+function renderQA(){
+  $('#qaList').innerHTML = QA.map(([q,a],i)=>`
+    <div class="qa-i${i===0?' open':''}">
+      <div class="q"><span class="ic">Q${i+1}</span><span>${q}</span></div>
+      <div class="a">${a}</div>
+    </div>`).join('');
+}
+$('#qaList').addEventListener('click', e => {
+  const q = e.target.closest('.q'); if(q) q.parentElement.classList.toggle('open');
+});
+const openQA = v => $('#qaWrap').classList.toggle('on', v);
+$('#btnQA').addEventListener('click', () => openQA(true));
+$('#qaClose').addEventListener('click', () => openQA(false));
+$('#qaMask').addEventListener('click', () => openQA(false));
+
+/* 侧栏素材 */
+$('#lnkProto').addEventListener('click', () => {
+  window.open('prototype.html', '_blank', 'noopener');
+  toast('原型已在新标签页打开');
+});
+$('#lnkSys').addEventListener('click', () => {
+  window.open('http://localhost:3000/', '_blank', 'noopener');
+  toast('提示：本机演示时可用，公网访问需服务在运行');
+});
+
+/* 键盘 */
+document.addEventListener('keydown', e => {
+  if(e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'VIDEO') return;
+  switch(e.key){
+    case 'ArrowRight': case 'PageDown': case ' ': e.preventDefault(); next(); break;
+    case 'ArrowLeft': case 'PageUp': e.preventDefault(); prev(); break;
+    case 'Home': e.preventDefault(); go(0); break;
+    case 'End': e.preventDefault(); go(SCENES.length-1); break;
+    case 'f': case 'F': e.preventDefault(); $('#btnFull').click(); break;
+    case 'q': case 'Q': e.preventDefault(); openQA(!$('#qaWrap').classList.contains('on')); break;
+    case 's': case 'S': e.preventDefault(); $('#app').classList.toggle('fold'); break;
+    case 'Escape':
+      if($('#qaWrap').classList.contains('on')) openQA(false);
+      else if($('#lb').classList.contains('on')) $('#lb').classList.remove('on');
+      break;
+  }
+});
+
+/* 打印：一次展开全部幕 */
+window.addEventListener('beforeprint', () => {
+  const keep = cur;
+  let all = '';
+  const old = $('#scene').innerHTML;
+  for(let i=0;i<SCENES.length;i++){
+    cur = i; renderScene();
+    all += '<div style="page-break-after:always">' + $('#scene').innerHTML + '</div>';
+  }
+  $('#scene').innerHTML = all;
+  cur = keep;
+});
+
+/* 启动 */
+renderQA();
+$('#pillScene').textContent = `第 1 / ${SCENES.length} 幕`;
+renderScene();
+
+/* 供自动化验收使用 */
+window.__DEMO = { scenes: SCENES.length, qa: QA.length, go, get index(){ return cur; } };
+window.__READY = true;
+</script>
+</body>
+</html>

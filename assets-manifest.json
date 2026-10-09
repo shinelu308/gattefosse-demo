@@ -1,0 +1,132 @@
+[
+  {
+    "name": "admin-01-login.jpg",
+    "label": "后台登录",
+    "size": 27673
+  },
+  {
+    "name": "admin-02-dashboard.jpg",
+    "label": "后台工作台",
+    "size": 102309
+  },
+  {
+    "name": "admin-16-content-list.jpg",
+    "label": "内容管理列表",
+    "size": 140672
+  },
+  {
+    "name": "admin-08-news-list.jpg",
+    "label": "新闻与活动列表",
+    "size": 207019
+  },
+  {
+    "name": "admin-page-preview.jpg",
+    "label": "页面预览原位编辑",
+    "size": 173735
+  },
+  {
+    "name": "admin-04-pc-list.jpg",
+    "label": "个人护理产品列表",
+    "size": 178684
+  },
+  {
+    "name": "admin-05-pc-edit.jpg",
+    "label": "产品编辑抽屉",
+    "size": 104229
+  },
+  {
+    "name": "admin-07-formula-list.jpg",
+    "label": "配方列表",
+    "size": 162436
+  },
+  {
+    "name": "admin-06-pharma-list.jpg",
+    "label": "药用辅料列表",
+    "size": 177067
+  },
+  {
+    "name": "admin-21-tag-manage.jpg",
+    "label": "标签体系治理",
+    "size": 138504
+  },
+  {
+    "name": "admin-03-content-heat.jpg",
+    "label": "内容热度",
+    "size": 141246
+  },
+  {
+    "name": "admin-content-heat-full.jpg",
+    "label": "内容热度全览",
+    "size": 539144
+  },
+  {
+    "name": "site-01-home.jpg",
+    "label": "前台首页",
+    "size": 117949
+  },
+  {
+    "name": "site-02-pc-finder.jpg",
+    "label": "个人护理原料检索",
+    "size": 105576
+  },
+  {
+    "name": "site-03-pc-detail.jpg",
+    "label": "原料详情页",
+    "size": 176192
+  },
+  {
+    "name": "site-04-formula-finder.jpg",
+    "label": "配方检索",
+    "size": 91241
+  },
+  {
+    "name": "site-05-formula-detail.jpg",
+    "label": "配方详情页",
+    "size": 149401
+  },
+  {
+    "name": "site-06-pharma.jpg",
+    "label": "药用辅料",
+    "size": 122982
+  },
+  {
+    "name": "site-07-search.jpg",
+    "label": "站内搜索",
+    "size": 97477
+  },
+  {
+    "name": "site-08-get-inspired.jpg",
+    "label": "Get Inspired",
+    "size": 99229
+  },
+  {
+    "name": "proto-01-gen.jpg",
+    "label": "原型 · 内容工厂产出",
+    "size": 546287
+  },
+  {
+    "name": "proto-02-publish.jpg",
+    "label": "原型 · 发布任务",
+    "size": 176703
+  },
+  {
+    "name": "proto-03-channels.jpg",
+    "label": "原型 · 渠道能力梯队",
+    "size": 173440
+  },
+  {
+    "name": "proto-04-compliance.jpg",
+    "label": "原型 · 合规预检",
+    "size": 229586
+  },
+  {
+    "name": "proto-05-geo.jpg",
+    "label": "原型 · 术语与法规库",
+    "size": 179303
+  },
+  {
+    "name": "proto-06-probe.jpg",
+    "label": "原型 · AI 引擎探测",
+    "size": 183388
+  }
+]
