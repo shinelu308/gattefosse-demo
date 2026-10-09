@@ -69,6 +69,7 @@
   .nav-item{
     display:flex;gap:9px;align-items:flex-start;padding:8px 10px;border-radius:8px;cursor:pointer;
     border:1px solid transparent;margin-bottom:2px;transition:background .13s,border-color .13s;
+    text-decoration:none;color:inherit;
   }
   .nav-item:hover{background:var(--paper-2);border-color:var(--line)}
   .nav-item.on{background:var(--accent-soft);border-color:#bfd8d1}
@@ -359,10 +360,15 @@
         <span class="no">↗</span>
         <span><span class="tx">社媒模块可交互原型</span><span class="tm">prototype.html</span></span>
       </div>
-      <div class="nav-item" id="lnkSys">
+      <div class="side-h" style="padding-top:12px">线上系统</div>
+      <a class="nav-item" href="https://gattefosse.loudaren.com/" target="_blank" rel="noopener">
         <span class="no">↗</span>
-        <span><span class="tx">真实系统（本机）</span><span class="tm">localhost:3000</span></span>
-      </div>
+        <span><span class="tx">前台官网</span><span class="tm">gattefosse.loudaren.com</span></span>
+      </a>
+      <a class="nav-item" href="https://gattefosse.loudaren.com/admin/" target="_blank" rel="noopener">
+        <span class="no">↗</span>
+        <span><span class="tx">后台管理系统</span><span class="tm">gattefosse.loudaren.com/admin</span></span>
+      </a>
     </aside>
 
     <main id="main"><div class="scene" id="scene"></div></main>
@@ -412,13 +418,13 @@ const SCENES = [
       {k:'演示时长', v:'60 分钟 · 11 幕', d:'开场定调 → 系统实证 → 商务收口'},
       {k:'主角', v:'真实系统 + 原型', d:'不是 PPT 讲功能，是当场演给他看'},
       {k:'核心逻辑', v:'承诺 ↔ 证据 对照', d:'每一层服务承诺，都有一处现场证据'},
-      {k:'系统入口', v:'<code>localhost:3000</code>', d:'前台 / · 后台 /admin/（本机演示用）'}
+      {k:'线上系统', v:'<code>gattefosse.loudaren.com</code>', d:'前台 / · 后台 /admin/（左侧目录可直达）'}
     ],
     keys:[
       {k:'← →', t:'上下幕'},{k:'空格', t:'下一幕'},{k:'F', t:'全屏'},{k:'Q', t:'应答口径'},
       {k:'S', t:'收起目录'},{k:'Home/End', t:'首/末幕'}
     ],
-    tip:{type:'green', tx:'<b>开始前 30 分钟：</b>确认 3000 端口服务在跑（长时间空闲会被回收）；四个标签页预先开好；把这条链接在副屏打开当提词器。'}
+    tip:{type:'green', tx:'<b>开始前 30 分钟：</b>确认线上系统 <code>gattefosse.loudaren.com</code> 可访问、管理员账号能正常登录；把「前台官网 / 后台系统 / 本推演台 / 可交互原型」四个标签页预先开好；再把这页放在副屏当提词器。'}
   },
 
   {
@@ -959,10 +965,6 @@ $('#qaMask').addEventListener('click', () => openQA(false));
 $('#lnkProto').addEventListener('click', () => {
   window.open('prototype.html', '_blank', 'noopener');
   toast('原型已在新标签页打开');
-});
-$('#lnkSys').addEventListener('click', () => {
-  window.open('http://localhost:3000/', '_blank', 'noopener');
-  toast('提示：本机演示时可用，公网访问需服务在运行');
 });
 
 /* 键盘 */

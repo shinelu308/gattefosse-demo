@@ -6,6 +6,7 @@
 |---|---|---|
 | **一镜到底推演台** | [`/`](https://shinelu308.github.io/gattefosse-demo/) | 11 幕连续推演，带讲稿、现场动作、证据截图、应答口径 |
 | **社媒模块可交互原型** | [`/prototype.html`](https://shinelu308.github.io/gattefosse-demo/prototype.html) | 6 视图可点击原型（内容工厂 / 发布任务 / 渠道能力 / 合规预检 / GEO / 引擎探测） |
+| **线上真实系统**（非本仓库） | [前台](https://gattefosse.loudaren.com/) ｜ [后台](https://gattefosse.loudaren.com/admin/) | 现场演示时实际操作的系统；需管理员账号登录 |
 
 ---
 
@@ -68,7 +69,8 @@ assets/               实机截图 26 张 + 视频封面
   video-poster.jpg    视频封面
 ```
 
-> 截图取自真实运行的系统（后台 1440×900）。**公开版使用静态截图**；现场演示时切换到本机 `localhost:3000` 操作真实系统。
+> 截图取自真实运行的系统（后台 1440×900）。**公开版使用静态截图**；现场演示时直接操作线上系统：
+> 前台 <https://gattefosse.loudaren.com/> ｜ 后台 <https://gattefosse.loudaren.com/admin/>
 
 ---
 
